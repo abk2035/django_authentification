@@ -36,8 +36,7 @@ def authenticate_user(request):
             try:
                 token = RefreshToken.for_user(user)
                 user_details = {}
-                user_details['name'] = "%s %s" % (
-                    user.first_name, user.last_name)
+                user_details['user'] = UserSerializer(user).data
                 user_details['access'] = str(token.access_token )
                 user_logged_in.send(sender=user.__class__,
                                     request=request, user=user)
